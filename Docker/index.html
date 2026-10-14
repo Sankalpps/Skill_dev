@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A simple, focused to-do list." />
+    <title>Today | To-do list</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="todo-card" aria-labelledby="page-title">
+        <div class="hero">
+          <div>
+            <p class="eyebrow">YOUR DAY, ORGANIZED</p>
+            <h1 id="page-title">Good morning<span aria-hidden="true">.</span></h1>
+            <p class="subtitle">A clear mind starts with a clear list.</p>
+          </div>
+          <div class="date-badge" id="current-date" aria-label="Today's date"></div>
+        </div>
+
+        <form class="add-form" id="add-form">
+          <label class="sr-only" for="task-input">Add a task</label>
+          <input
+            id="task-input"
+            name="task"
+            type="text"
+            maxlength="120"
+            placeholder="What needs to get done?"
+            autocomplete="off"
+            required
+          />
+          <button type="submit" class="add-button">Add task</button>
+        </form>
+
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filter tasks">
+            <button class="filter-button is-active" type="button" data-filter="all">All</button>
+            <button class="filter-button" type="button" data-filter="active">Active</button>
+            <button class="filter-button" type="button" data-filter="completed">Completed</button>
+          </div>
+          <button class="clear-button" id="clear-completed" type="button">Clear completed</button>
+        </div>
+
+        <ul class="task-list" id="task-list" aria-live="polite"></ul>
+        <div class="empty-state" id="empty-state">
+          <span class="empty-icon" aria-hidden="true">✦</span>
+          <p id="empty-title">Your list is clear.</p>
+          <span id="empty-message">Add a task above to get started.</span>
+        </div>
+
+        <footer class="task-summary">
+          <span id="task-count">0 tasks left</span>
+          <span class="keyboard-hint"><kbd>Enter</kbd> to add a task</span>
+        </footer>
+      </section>
+    </main>
+  </body>
+</html>

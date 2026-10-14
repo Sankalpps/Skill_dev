@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mevi Flask Demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    >
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <span class="navbar-brand">Mevi Technologies | Flask</span>
+      </div>
+    </nav>
+
+    <main class="container py-5">
+      <div class="p-4 p-md-5 bg-white rounded-4 shadow-sm">
+        <h1>My first Flask application</h1>
+        <p class="lead">Python powers the backend. Bootstrap styles the page.</p>
+        <label for="visitor" class="form-label">Enter your name</label>
+        <input id="visitor" class="form-control mb-3" placeholder="Enter your name">
+        <button id="greetBtn" class="btn btn-primary">Greet me</button>
+        <p id="message" class="mt-3" aria-live="polite"></p>
+        <a href="/health">Check health endpoint</a>
+      </div>
+    </main>
+
+    <script>
+      document.getElementById("greetBtn").addEventListener("click", async () => {
+        const name = document.getElementById("visitor").value.trim();
+        const message = document.getElementById("message");
+
+        if (!name) {
+          message.textContent = "Please enter your name.";
+          return;
+        }
+
+        const response = await fetch(`/api/greet/${encodeURIComponent(name)}`);
+        const data = await response.json();
+        message.textContent = data.message;
+      });
+    </script>
+  </body>
+</html>
