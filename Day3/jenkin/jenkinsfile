@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = 'devops-site:1.0'
+        CONTAINER_NAME = 'site-ci'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Sankalpps/Skill_dev.git'
+            }
+        }
+
+        stage('Validate files') {
+            steps {
+                sh 'test -f index.html'
+                sh 'test -f style.css'
+                sh 'test -f Dockerfile'
+                echo 'Required files are present.'
+            }
+        }
+
+        stage('Build Docker image') {
+            steps {
+                sh 'docker build -t ${IMAGE_NAME} .'
+            }
+        }
+
+        stage('Deploy website') {
+            steps {
+                sh 'docker rm -f ${CONTAINER_NAME} || true'
+                sh 'docker run -d --name ${CONTAINER_NAME} -p 8085:80 ${IMAGE_NAME}'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Success. Test the site at http://localhost:8085 on the Docker host.'
+        }
+        failure {
+            echo 'Pipeline failed. Open the failed build Console Output and inspect the first error.'
+        }
+    }
+}
